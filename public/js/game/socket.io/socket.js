@@ -25,8 +25,8 @@ class GameSocket {
    * Logs the user into the server
    * @param  {string} username the label identifying the users
    */
-  login (username) {
-    this.connection.emit("login", username, (success) => { console.log(success); });
+  login (username, callback) {
+    this.connection.emit("login", username, (success) => { callback(success); });
   }
 
   /**

@@ -1,6 +1,7 @@
 extends layout
 
-- var username = "#{name}";
+block append variables
+  script var name = "#{name}";
 
 block append footer-scripts
   script(type="text/javascript" src="/js/game/game.js")
