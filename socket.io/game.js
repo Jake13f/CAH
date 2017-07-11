@@ -1,43 +1,45 @@
-var users = {};
+class Game {
+  constructor () {
+    this.users = {};
+    this.cards = {};
+  }
 
-module.exports = (io) => {
-  io.on("connection", (client) => {
+  /**
+   * Logs the user into the game session adding them to the users dictionary
+   * @param  {string} username the label to use for the new user
+   * @param  {object} client socket.io connection object
+   * @return {boolean} true if the user was successfully logged in, false otherwise
+   */
+  login (username, client) {
+    if (this.users[username] !== undefined)
+      return false; // name already used
 
-    /**
-     * Logs the user into the system
-     * @param  {string} username the name to label the user
-     * @param  {Function} cb a callback function letting the emit know the login status
-     */
-    client.on("login", (username, callback) => {
-      if (users[username] == undefined) {
-        client.username = username;
-        users[username] = client;
-        callback(true);
-      } else {
-        callback(false);
-      }
-    });
+    client.username = username;
+    this.users[username] = client;
+    return true
+  }
 
-    /**
-     * Checks whether the username is already in use
-     * @param  {string} username the name to check for
-     * @param  {Function} callback sends back the true or false if the name is ok to
-     *                             use or not
-     */
-    client.on("check-name", (username, callback) => {
-      if (users[username] == undefined)
-        callback(true);
-      else
-        callback(false);
-    });
+  /**
+   * Removes the user from the game session
+   * @param  {string} username the label that represents the user disconnecting
+   * @return {boolean} true if the user was successfully logged out, false otherwise
+   */
+  logout (username) {
+    if (this.users[username] === undefined)
+      return false;
 
-    /**
-     * Disconnect event
-     * Removes the user from the collection
-     */
-    client.on("disconnect", () => {
-      if (users[client.username] != undefined)
-        delete users[client.username];
-    });
-  });
+    delete this.users[username];
+    return true;
+  }
+
+  /**
+   * Checks to see if the username is available
+   * @param  {string} username the label to use for the new user
+   * @return {boolean} true if the name is available, false otherwise
+   */
+  checkName (username) {
+    return this.users[username] === undefined;
+  }
 }
+
+module.exports = Game;
