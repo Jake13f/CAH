@@ -18,6 +18,10 @@ module.exports = (io) => {
       }
     });
 
+    /**
+     * Disconnect event
+     * Removes the user from the collection
+     */
     client.on("disconnect", () => {
       if (users[client.username] != undefined)
         delete users[client.username];

@@ -1,8 +1,13 @@
-const PROTOCOL = window.location.protocol;
-const HOSTNAME = window.location.hostname;
-const BASE_URL = PROTOCOL + "//" + HOSTNAME;
-const PORT = 3000;
+/**
+ * Required Files:
+ * /socket.io/socket.io.js -- Library File
+ */
 
+/**
+ * The Cards Against Humanity Game Socket that will manage all of the
+ * interactions between the client and server
+ * @type {GameSocket}
+ */
 class GameSocket {
   constructor (url) {
     this.connection = io(url);
@@ -31,13 +36,3 @@ class GameSocket {
     this.connection.emit("login", username, (success) => { console.log(success); });
   }
 }
-
-$(document).ready(() => {
-  const game = new GameSocket(BASE_URL + ":" + PORT);
-  game.listen();
-
-  $("#login").on("click", function (e) {
-    var name = $("#username").val();
-    game.login(name);
-  });
-});
