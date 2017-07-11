@@ -22,17 +22,26 @@ class GameSocket {
   }
 
   /**
-   * Adds all of the base event listeners for the game
-   */
-  listen () {
-    this.connection.on("test", () => { console.log("test"); });
-  }
-
-  /**
    * Logs the user into the server
    * @param  {string} username the label identifying the users
    */
   login (username) {
     this.connection.emit("login", username, (success) => { console.log(success); });
+  }
+
+  /**
+   * Verifies that the username hasn't been previously used
+   * @param  {string} username string desired name to use
+   * @param  {Function} callback sends the ok (true) whether or not it is good to use
+   */
+  checkName (username, callback) {
+    this.connection.emit("check-name", username, (ok) => { callback(ok); });
+  }
+
+  /**
+  * Adds all of the base event listeners for the game
+  */
+  listen () {
+    this.connection.on("test", () => { console.log("test"); });
   }
 }

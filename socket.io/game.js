@@ -6,16 +6,29 @@ module.exports = (io) => {
     /**
      * Logs the user into the system
      * @param  {string} username the name to label the user
-     * @param  {function} cb a callback function letting the emit know the login status
+     * @param  {Function} cb a callback function letting the emit know the login status
      */
-    client.on("login", (username, cb) => {
+    client.on("login", (username, callback) => {
       if (users[username] == undefined) {
         client.username = username;
         users[username] = client;
-        cb(true);
+        callback(true);
       } else {
-        cb(false);
+        callback(false);
       }
+    });
+
+    /**
+     * Checks whether the username is already in use
+     * @param  {string} username the name to check for
+     * @param  {Function} callback sends back the true or false if the name is ok to
+     *                             use or not
+     */
+    client.on("check-name", (username, callback) => {
+      if (users[username] == undefined)
+        callback(true);
+      else
+        callback(false);
     });
 
     /**
