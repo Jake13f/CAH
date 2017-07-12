@@ -59,13 +59,16 @@ class Game {
    * @return {Object} The initial cards for the current game
    */
   load () {
-    if (this.cards.blackCards === undefined || this.cards.whiteCards === undefined)
-      return null;
-
     var cards = {
-      question: {},
+      question: {
+        text: "N/a",
+        pick: 0
+      },
       answers: []
     };
+
+    if (this.cards.blackCards === undefined || this.cards.whiteCards === undefined)
+      return cards;
 
     // Choose a random question and remove it
     if (this.cards.blackCards.length < 1) {
