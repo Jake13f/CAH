@@ -1,6 +1,6 @@
 const Cards = require("../library/base.json");
 const Game  = require("./game.js");
-var game = new Game();
+var game = new Game(clone(Cards));
 
 module.exports = (io) => {
   io.on("connection", (client) => {
@@ -23,8 +23,15 @@ module.exports = (io) => {
      * Disconnect event
      * Removes the user from the collection
      */
-    client.on("disconnect", () => {
-      game.logout(client.username);
-    });
+    client.on("disconnect", () => { game.logout(client.username); });
   });
+}
+
+/**
+ * Clones an Object to prevent a reference to another
+ * @param  {Object} obj The object to copy
+ * @return {Object} The new object without reference
+ */
+function clone (obj) {
+  return JSON.parse(JSON.stringify(obj));
 }

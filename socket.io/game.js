@@ -1,7 +1,7 @@
 class Game {
-  constructor () {
+  constructor (cards) {
     this.users = {};
-    this.cards = {};
+    this.cards = cards || {};
   }
 
   /**
