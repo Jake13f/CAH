@@ -1,6 +1,7 @@
 /**
  * Required Files:
  * /socket.io/socket.io.js -- Library File
+ * /classes/card.js
  */
 
 /**
@@ -46,6 +47,9 @@ class GameSocket {
   * Adds all of the base event listeners for the game
   */
   listen () {
-    this.connection.on("test", () => { console.log("test"); });
+    this.connection.on("load-cards", (cards) => {
+      this.cards = cards;
+      $("body").append("<pre>" + JSON.stringify(this.cards, null, 3) + "</pre>");
+    });
   }
 }

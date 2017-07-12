@@ -1,6 +1,6 @@
 /**
  * REQUIRED FILES:
- * /socket.io/socket.js
+ * /classes/socket.js
  */
 
 $(document).ready(() => {

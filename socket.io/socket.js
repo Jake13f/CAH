@@ -9,7 +9,10 @@ module.exports = (io) => {
      * @param  {string} username the name to label the user
      * @param  {Function} cb a callback function letting the emit know the login status
      */
-    client.on("login", (username, callback) => { callback(game.login(username, client)); });
+    client.on("login", (username, callback) => {
+      callback(game.login(username, client));
+      io.to(game.room).emit("load-cards", game.load());
+    });
 
     /**
      * Checks whether the username is already in use
@@ -17,13 +20,17 @@ module.exports = (io) => {
      * @param  {Function} callback sends back the true or false if the name is ok to
      *                             use or not
      */
-    client.on("check-name", (username, callback) => { callback(game.checkName(username)); });
+    client.on("check-name", (username, callback) => {
+      callback(game.checkName(username));
+    });
 
     /**
      * Disconnect event
      * Removes the user from the collection
      */
-    client.on("disconnect", () => { game.logout(client.username); });
+    client.on("disconnect", () => {
+      game.logout(client.username);
+    });
   });
 }
 
