@@ -11,6 +11,10 @@
 class GameSocket {
   constructor (url) {
     this.connection = io(url);
+    this.cards = {
+      question: null,
+      answers: []
+    };
   }
 
   /**
