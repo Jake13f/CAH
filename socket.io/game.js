@@ -9,6 +9,7 @@ class Game {
     this.users = {};
     this.cards = cards || {};
     this.room = "";
+    this.started = false;
   }
 
   /**
@@ -67,8 +68,10 @@ class Game {
       answers: []
     };
 
-    if (this.cards.blackCards === undefined || this.cards.whiteCards === undefined)
+    if (this.started === true || this.cards.blackCards === undefined || this.cards.whiteCards === undefined)
       return cards;
+
+    this.started = true; // Mark the game as started
 
     // Choose a random question and remove it
     if (this.cards.blackCards.length < 1) {
@@ -81,7 +84,8 @@ class Game {
 
     // Choose random answers and remove them for each user
     for (var user in this.users) {
-      // TODO: Build separately for each user different hands
+      cards.answers = [];
+
       for (var numCards = 0; numCards < 8; ++numCards) {
         if (this.cards.whiteCards.length < 1) break;
 
@@ -89,6 +93,8 @@ class Game {
         cards.answers.push(this.cards.whiteCards[index]);
         this.cards.whiteCards.splice(index, 1); // Remove from the array
       }
+
+      this.users[user].emit("load-cards", cards);
     }
 
     return cards;

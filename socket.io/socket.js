@@ -11,7 +11,6 @@ module.exports = (io) => {
      */
     client.on("login", (username, callback) => {
       callback(game.login(username, client));
-      io.to(game.room).emit("load-cards", game.load());
     });
 
     /**
@@ -22,6 +21,10 @@ module.exports = (io) => {
      */
     client.on("check-name", (username, callback) => {
       callback(game.checkName(username));
+    });
+
+    client.on("game:start", () => {
+      game.load();
     });
 
     /**
