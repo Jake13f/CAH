@@ -1,9 +1,13 @@
 extends layout
 
+block append css
+  link(rel='stylesheet', href='/stylesheets/splashscreen.css')
+
 block append js
   script(type="text/javascript" src="/js/game/login.js")
 
 block content
-  h1= title
-  input#username(type="text" placeholder="Enter a Username...")
-  button#login Login
+  #splashscreen
+    #title.shadow-text= title
+    input#username.shadow-text(type="text" placeholder="Enter a Username..." autocomplete="off")
+    button#login.shadow-text Login

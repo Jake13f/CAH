@@ -1,0 +1,72 @@
+body { background-color: #211f1f; }
+
+#splashscreen {
+  width: 75%;
+  height: 50%;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+#title {
+  font-size: 90px;
+  font-weight: bold;
+  margin: 20px;
+}
+
+#username {
+  display: block;
+  height: 75px;
+  width: 700px;
+
+  font-size: 50px;
+  text-align: center;
+
+  margin: 50px auto;
+  border: none;
+  border-bottom: 2px solid #161616;
+  border-radius: 50%;
+  box-sizing: border-box;
+  outline: none;
+
+  background-color: inherit;
+}
+
+#login {
+  display: block;
+  height: 75px;
+  width: 300px;
+
+  margin: 0 auto;
+  font-size: 40px;
+  border: 2px solid #161616;
+  border-radius: 10px;
+  outline: none;
+
+  background-color: inherit;
+  box-shadow: inset 0px 0px 3px #161616;
+  transition:
+    .1s box-shadow linear,
+    .1s background-color linear,
+    .1s color linear;
+}
+#login:hover {
+  box-shadow: inset 2px 2px 5px #161616;
+  background-color: #1d1b1b;
+  color: rgba(0,0,0,.7);
+}
+
+.shadow-text {
+  font-weight: bold;
+  color: rgba(0,0,0,.6);
+  text-shadow: 1px 1px 3px rgba(255,255,255,.1);
+}
+
+#username::-webkit-input-placeholder { color: rgba(0,0,0,.6); text-shadow: 1px 1px 3px rgba(255,255,255,.1); }
+#username::-moz-placeholder { color: rgba(0,0,0,.6); text-shadow: 1px 1px 3px rgba(255,255,255,.1); }
+#username:-ms-input-placeholder { color: rgba(0,0,0,.6); text-shadow: 1px 1px 3px rgba(255,255,255,.1); }
+#username:-moz-placeholder { color: rgba(0,0,0,.6); text-shadow: 1px 1px 3px rgba(255,255,255,.1); }
