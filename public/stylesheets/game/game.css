@@ -1,0 +1,68 @@
+#menu {
+  height: 50px;
+  line-height: 50px;
+  background-color: rgb(199, 0, 0);
+  color: #fff;
+  padding-left: 10px;
+}
+
+#menu > button {
+  height: 100%;
+  width: 100px;
+  font-size: 1.3em;
+  color: #fff;
+  background-color: #820101;
+  border: none;
+  cursor: pointer;
+  transition: .2s background-color linear;
+}
+
+#menu > button#start { background-color: #0da934; }
+#menu > button#start:hover { background-color: #00e83a; }
+
+#menu > button#reset { background-color: #ff8a00; }
+#menu > button#reset:hover { background-color: #cc6e00; }
+
+#game-top,
+#game-bottom {
+  padding: 20px;
+  box-sizing: border-box;
+}
+#game-top { height: 50%; }
+#game-bottom { height: calc(50% - 50px); }
+
+#answers {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 150px;
+  height: 175px;
+  border: 1px solid #989898;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 5px -2px #000;
+
+  -webkit-user-select: none; /* Safari */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+
+  transition: .2s height cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.answer:hover {
+  height: 225px;
+}
+
+.question {
+  height: 262px;
+  width: 225px;
+  line-height: 1.5em;
+  background-color: #2b2b2b;
+  color: #fff;
+}

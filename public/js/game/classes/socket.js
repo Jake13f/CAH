@@ -12,11 +12,7 @@
 class GameSocket {
   constructor (url, controls) {
     this.connection = io(url);
-    this.elements = {
-      start: controls.start,
-      pause: controls.pause,
-      stop: controls.stop
-    };
+    this.elements = controls;
     this.cards = {
       question: null,
       answers: []
@@ -49,22 +45,31 @@ class GameSocket {
   }
 
   start () { this.connection.emit("game:start"); }
+  reset () { }
 
   /**
   * Adds all of the base event listeners for the game
   */
   listen () {
+    /**
+     * When the server is ready to start the game, store the received cards and
+     * build their respective objects. Then prepare the page for the game.
+     * @param  {Object} cards contains the question and answers for the respective player
+     * @attribute  {Object} question - containing (text) and (pick) count
+     * @attribute  {Array} answers - strings containing the text
+     */
     this.connection.on("load-cards", cards => {
       // Setup the variables
       this.cards.question = new Question(cards.question.text, cards.question.pick);
       this.cards.answers  = cards.answers.map(card => new Answer(card));
 
       // Toggle elements
-      $(this.elements.start).hide();
+      $(this.elements.start).addClass("hide");
+      $(this.elements.reset).removeClass("hide");
 
       // Render cards
-      $("body").append(this.cards.question.render());
-      $("body").append(this.cards.answers.map(ans => ans.render()).join(""));
+      $(this.elements.question).append(this.cards.question.render());
+      $(this.elements.answers).append(this.cards.answers.map(ans => ans.render()).join(""));
     });
   }
 }

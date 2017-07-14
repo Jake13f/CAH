@@ -3,9 +3,21 @@ extends layout
 block append variables
   script var name = "#{name}";
 
-block append footer-scripts
+block append css
+  link(rel='stylesheet', href='/stylesheets/game/game.css')
+
+block append js
   script(type="text/javascript" src="/js/game/game.js")
 
 block content
-  h1 Welcome, #{name}
-  button#start Start!
+  #menu
+    b Welcome, #{name}
+    button#start.right Start!
+    button#reset.right.hide Reset!
+    
+  #game-top
+    #question
+    #submitted-answers
+
+  #game-bottom
+    #answers

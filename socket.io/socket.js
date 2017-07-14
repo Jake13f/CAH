@@ -23,9 +23,7 @@ module.exports = (io) => {
       callback(game.checkName(username));
     });
 
-    client.on("game:start", () => {
-      game.load();
-    });
+    client.on("game:start", () => { game.load(client); });
 
     /**
      * Disconnect event

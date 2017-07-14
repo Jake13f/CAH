@@ -42,6 +42,7 @@ class Game {
 
     this.users[username].leave(this.room);
     delete this.users[username];
+
     return true;
   }
 
@@ -59,7 +60,7 @@ class Game {
    * from the deck.
    * @return {Object} The initial cards for the current game
    */
-  load () {
+  load (client) {
     var cards = {
       question: {
         text: "N/a",
@@ -68,7 +69,7 @@ class Game {
       answers: []
     };
 
-    if (this.started === true || this.cards.blackCards === undefined || this.cards.whiteCards === undefined)
+    if (this.started || this.cards.blackCards === undefined || this.cards.whiteCards === undefined)
       return cards;
 
     this.started = true; // Mark the game as started
@@ -94,6 +95,7 @@ class Game {
         this.cards.whiteCards.splice(index, 1); // Remove from the array
       }
 
+      this.users[user].cards = cards;
       this.users[user].emit("load-cards", cards);
     }
 
