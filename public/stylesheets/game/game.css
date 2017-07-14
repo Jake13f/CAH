@@ -52,11 +52,15 @@
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none;
 
-  transition: .2s background-color cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition:
+    .2s background-color cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    .2s color cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .answer { cursor: pointer; }
 .answer:hover { background-color: rgba(78, 78, 78, 0.19); }
+
+.selected { background-color: rgb(199, 0, 0) !important; color: #fff !important; }
 
 .question {
   height: 262px;

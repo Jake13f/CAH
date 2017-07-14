@@ -14,8 +14,11 @@ const ELEMENTS = {
   reset: "#reset",
 
   question: "#question",
-  answer: ".answer",
-  answers: "#answers"
+  answers: "#answers",
+
+  answer_card: ".answer",
+  question_card: ".question",
+  selected: ".selected"
 };
 
 $(document).ready(() => {
@@ -30,5 +33,5 @@ $(document).ready(() => {
   $(ELEMENTS.start).on("click", e => game.start());
   $(ELEMENTS.reset).on("click", e => game.reset());
 
-  $(document).on("click", ELEMENTS.answer, function (e) { game.selectCard($(this)); });
+  $(document).on("click", ELEMENTS.answer_card, function (e) { game.selectCard($(this).data("index")); });
 });

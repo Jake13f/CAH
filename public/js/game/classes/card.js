@@ -3,16 +3,10 @@
  * @type {Card}
  */
 class Card {
-  constructor (text) {
+  constructor (text, selector) {
     this.text = text;
-    this.selected = false;
+    this.selector = selector;
   }
-
-  /**
-   * Toggles the selected attribute
-   */
-  select () { this.selected = true; }
-  deselect () { this.selected = false; }
 
   /**
    * Builds the html for the given card
@@ -28,12 +22,24 @@ class Card {
  * @type {Answer}
  */
 class Answer extends Card {
+  constructor (text, index, selector) {
+    super(text, selector);
+    this.index = index;
+    this.selected = false;
+  }
+
+  /**
+   * Toggles the selected attribute
+   */
+  select () { this.selected = true; $(this.selector + "[data-index='" + this.index + "']").addClass("selected"); }
+  deselect () { this.selected = false; $(this.selector + "[data-index='" + this.index + "']").removeClass("selected"); }
+
   /**
    * Builds the html for the given card
    * @return {string} HTML string for the given card
    */
-  render (index) {
-    return "<div class='card answer' data-index='" + index + "'>" + super.render() + "</div>";
+  render () {
+    return "<div class='card answer' data-index='" + this.index + "'>" + super.render() + "</div>";
   }
 }
 
@@ -42,8 +48,8 @@ class Answer extends Card {
  * @type {Question}
  */
 class Question extends Card {
-  constructor (text, pick) {
-    super(text);
+  constructor (text, pick, selector) {
+    super(text, selector);
     this.pick = pick;
   }
 

@@ -15,7 +15,8 @@ class GameSocket {
     this.elements = controls;
     this.cards = {
       question: null,
-      answers: []
+      answers: [],
+      selected: []
     };
   }
 
@@ -55,10 +56,14 @@ class GameSocket {
   */
   reset () { this.connection.emit("game:reset"); }
 
-  selectCard (card) {
-    var index = card.data("index");
-    if (index >= 0 && index < this.cards.answers.length)
+  selectCard (index) {
+    if (index >= 0 && index < this.cards.answers.length) {
+      if (this.cards.selected.length >= this.cards.question.pick)
+        this.cards.answers[this.cards.selected.shift()].deselect(); // Removes first item and returns it like a queue
+
       this.cards.answers[index].select();
+      this.cards.selected.push(index);
+    }
   }
 
   /**
@@ -74,8 +79,8 @@ class GameSocket {
      */
     this.connection.on("load-cards", cards => {
       // Setup the variables
-      this.cards.question = new Question(cards.question.text, cards.question.pick);
-      this.cards.answers  = cards.answers.map(card => new Answer(card));
+      this.cards.question = new Question(cards.question.text, cards.question.pick, this.elements.question_card);
+      this.cards.answers  = cards.answers.map((card, index) => new Answer(card, index, this.elements.answer_card));
 
       // Toggle elements
       $(this.elements.start).addClass("hide");
@@ -83,7 +88,7 @@ class GameSocket {
 
       // Render cards
       $(this.elements.question).html(this.cards.question.render());
-      $(this.elements.answers).html(this.cards.answers.map((ans, i) => ans.render(i)).join(""));
+      $(this.elements.answers).html(this.cards.answers.map(ans => ans.render()).join(""));
     });
   }
 }
