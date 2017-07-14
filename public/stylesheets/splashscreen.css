@@ -18,7 +18,7 @@ body { background-color: #211f1f; }
   margin: 20px;
 }
 
-#username {
+input.shadow-input {
   display: block;
   height: 75px;
   width: 700px;
@@ -66,7 +66,7 @@ body { background-color: #211f1f; }
   text-shadow: 1px 1px 3px rgba(255,255,255,.1);
 }
 
-#username::-webkit-input-placeholder { color: rgba(0,0,0,.6); text-shadow: 1px 1px 3px rgba(255,255,255,.1); }
-#username::-moz-placeholder { color: rgba(0,0,0,.6); text-shadow: 1px 1px 3px rgba(255,255,255,.1); }
-#username:-ms-input-placeholder { color: rgba(0,0,0,.6); text-shadow: 1px 1px 3px rgba(255,255,255,.1); }
-#username:-moz-placeholder { color: rgba(0,0,0,.6); text-shadow: 1px 1px 3px rgba(255,255,255,.1); }
+input.shadow-input::-webkit-input-placeholder { color: rgba(0,0,0,.6); text-shadow: 1px 1px 3px rgba(255,255,255,.1); }
+input.shadow-input::-moz-placeholder { color: rgba(0,0,0,.6); text-shadow: 1px 1px 3px rgba(255,255,255,.1); }
+input.shadow-input:-ms-input-placeholder { color: rgba(0,0,0,.6); text-shadow: 1px 1px 3px rgba(255,255,255,.1); }
+input.shadow-input:-moz-placeholder { color: rgba(0,0,0,.6); text-shadow: 1px 1px 3px rgba(255,255,255,.1); }

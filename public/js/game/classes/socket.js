@@ -31,21 +31,29 @@ class GameSocket {
    * Logs the user into the server
    * @param  {string} username the label identifying the users
    */
-  login (username, callback) {
-    this.connection.emit("login", username, (success) => { callback(success); });
+  login (username, room, callback) {
+    this.connection.emit("login", username, room, (success) => { callback(success); });
   }
 
   /**
    * Verifies that the username hasn't been previously used
    * @param  {string} username string desired name to use
+   * @param  {string} room the room to check
    * @param  {Function} callback sends the ok (true) whether or not it is good to use
    */
-  checkName (username, callback) {
-    this.connection.emit("check-name", username, (ok) => { callback(ok); });
+  checkName (username, room, callback) {
+    this.connection.emit("check-name", username, room, (ok) => { callback(ok); });
   }
 
+  /**
+   * Lets the server know to start the game
+   */
   start () { this.connection.emit("game:start"); }
-  reset () { }
+
+  /**
+  * Lets the server know to reset the game
+  */
+  reset () { this.connection.emit("game:reset"); }
 
   /**
   * Adds all of the base event listeners for the game
@@ -68,8 +76,8 @@ class GameSocket {
       $(this.elements.reset).removeClass("hide");
 
       // Render cards
-      $(this.elements.question).append(this.cards.question.render());
-      $(this.elements.answers).append(this.cards.answers.map(ans => ans.render()).join(""));
+      $(this.elements.question).html(this.cards.question.render());
+      $(this.elements.answers).html(this.cards.answers.map(ans => ans.render()).join(""));
     });
   }
 }

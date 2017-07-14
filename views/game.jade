@@ -1,7 +1,9 @@
 extends layout
 
 block append variables
-  script var name = "#{name}";
+  script.
+    var name = "#{name}";
+    var room = "#{room}";
 
 block append css
   link(rel='stylesheet', href='/stylesheets/game/game.css')

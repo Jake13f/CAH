@@ -20,7 +20,7 @@ const ELEMENTS = {
 $(document).ready(() => {
   const game = new GameSocket(BASE_URL, ELEMENTS);
 
-  game.login(name, (success) => {
+  game.login(name, room, (success) => {
     if (success === false) window.location.replace(BASE_URL);
 
     game.listen();

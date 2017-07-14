@@ -5,10 +5,10 @@
  */
 
 class Game {
-  constructor (cards) {
+  constructor (cards, roomname) {
     this.users = {};
     this.cards = cards || {};
-    this.room = "";
+    this.room = roomname || "";
     this.started = false;
   }
 
@@ -19,13 +19,11 @@ class Game {
    * @return {boolean} true if the user was successfully logged in, false otherwise
    */
   login (username, client) {
-    if (this.users[username] !== undefined)
+    if (this.users[username] !== undefined || this.started)
       return false; // name already used
 
-    if (this.room === "")
-      this.room = username; // Create the unique room
-
     client.username = username;
+    client.roomname = this.room;
     client.join(this.room);
     this.users[username] = client;
     return true
@@ -60,7 +58,7 @@ class Game {
    * from the deck.
    * @return {Object} The initial cards for the current game
    */
-  load (client) {
+  load () {
     var cards = {
       question: {
         text: "N/a",
@@ -100,6 +98,16 @@ class Game {
     }
 
     return cards;
+  }
+
+  /**
+   * Resets the current game and starts over
+   * @param {Object} cards The cards to use for the game
+   */
+  reset (cards) {
+    this.cards = cards;
+    this.started = false;
+    this.load();
   }
 }
 

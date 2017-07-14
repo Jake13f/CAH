@@ -9,10 +9,15 @@ router.get('/', function (req, res, next) {
 /* GET home page. */
 router.get('/game', function (req, res, next) {
   var name = req.query.name;
-  if (name === undefined || name === "" || name.length > 20 || name.length < 1)
+  var room = req.query.room;
+
+  if (
+    name === undefined || name === "" || name.length > 20 || name.length < 1 ||
+    room === undefined || room === "" || room.length > 20 || room.length < 1
+  )
     res.redirect("/");
   else
-    res.render('game', { name: req.query.name });
+    res.render('game', { name: name, room: room });
 });
 
 module.exports = router;
