@@ -32,8 +32,8 @@ class Answer extends Card {
    * Builds the html for the given card
    * @return {string} HTML string for the given card
    */
-  render () {
-    return "<div class='card answer'>" + super.render() + "</div>";
+  render (index) {
+    return "<div class='card answer' data-index='" + index + "'>" + super.render() + "</div>";
   }
 }
 

@@ -55,6 +55,12 @@ class GameSocket {
   */
   reset () { this.connection.emit("game:reset"); }
 
+  selectCard (card) {
+    var index = card.data("index");
+    if (index >= 0 && index < this.cards.answers.length)
+      this.cards.answers[index].select();
+  }
+
   /**
   * Adds all of the base event listeners for the game
   */
@@ -77,7 +83,7 @@ class GameSocket {
 
       // Render cards
       $(this.elements.question).html(this.cards.question.render());
-      $(this.elements.answers).html(this.cards.answers.map(ans => ans.render()).join(""));
+      $(this.elements.answers).html(this.cards.answers.map((ans, i) => ans.render(i)).join(""));
     });
   }
 }
