@@ -9,5 +9,28 @@ body { font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 a { color: #00B7FF; }
 
-.hide { display: none; }
+.hide { display: none !important; }
 .right { float: right; }
+
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: rgba(0,0,0,.7);
+  z-index: 2;
+}
+
+.overlay > .overlay-msg {
+  font-size: 50px;
+  font-weight: bold;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+}

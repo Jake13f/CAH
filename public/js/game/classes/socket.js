@@ -115,6 +115,8 @@ class GameSocket {
     this.connection.on("guessing", () => {
       if ($(this.elements.submit).hasClass("hide") === false)
         $(this.elements.submit).addClass("hide");
+
+      $(this.elements.overlay).removeClass("hide");
     });
 
     /**

@@ -13,6 +13,7 @@ const ELEMENTS = {
   stop: "#stop",
   reset: "#reset",
   submit: "#submit-answer",
+  overlay: ".overlay",
 
   question: "#question",
   answers: "#answers",
