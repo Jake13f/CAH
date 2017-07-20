@@ -75,6 +75,15 @@ class GameSocket {
     }
   }
 
+  submitCards () {
+    if (this.cards.selected.length !== this.cards.question.pick)
+      return;
+
+    // TODO: disable further selection
+    $(this.elements.submit).addClass("hide");
+    this.connection.emit("submit-cards", this.cards.selected);
+  }
+
   /**
   * Adds all of the base event listeners for the game
   */
@@ -100,8 +109,33 @@ class GameSocket {
       $(this.elements.answers).html(this.cards.answers.map(ans => ans.render()).join(""));
     });
 
+    /**
+     * Toggle the user's screen to be set up for guessing
+     */
     this.connection.on("guessing", () => {
-      console.log("GUESSING");
+      if ($(this.elements.submit).hasClass("hide") === false)
+        $(this.elements.submit).addClass("hide");
+    });
+
+    /**
+     * Toggle the user's screen to be set up for answering
+     */
+    this.connection.on("answering", () => {
+      $(this.elements.submit).removeClass("hide");
+    });
+
+    /**
+     * Display the submitted cards
+     * @param  {object} submission contains the user's submitted cards and the username of the
+     *                             person who sent them
+     */
+    this.connection.on("selected-cards", submission => {
+      var html = submission.cards.map((card, index) => new Submission(card, this.elements.submission).render()).join("");
+      var elem = $("<div>", { class: "submission" });
+      elem.html(html);
+      elem.data("user", submission.user);
+
+      $(this.elements.submitted_answers).append(elem);
     });
   }
 }

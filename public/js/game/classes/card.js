@@ -61,3 +61,21 @@ class Question extends Card {
     return "<div class='card question'>" + super.render() + " (" + this.pick + ")</div>";
   }
 }
+
+/**
+ * Builds upon the Card class functionality unique to a submission
+ * @type {Question}
+ */
+class Submission extends Card {
+  constructor (text, selector) {
+    super(text, selector);
+  }
+
+  /**
+   * Builds the html for the given card
+   * @return {string} HTML string for the given card
+   */
+  render () {
+    return "<div class='card'>" + super.render() + "</div>";
+  }
+}

@@ -55,6 +55,16 @@ module.exports = (io) => {
     });
 
     /**
+     * Handles the event of a user submitting their cards
+     */
+    client.on("submit-cards", cards => {
+      if (checkForGame(client.roomname, games) === true) {
+        var game = games[client.roomname];
+        game.submitCards(client.username, cards);
+      }
+    });
+
+    /**
      * Disconnect event
      * Removes the user from the collection
      */
@@ -62,6 +72,11 @@ module.exports = (io) => {
       if (checkForGame(client.roomname, games)) {
         var game = games[client.roomname];
         game.logout(client.username);
+
+        // Removes the game if no users left
+        if (Object.keys(game.users).length === 0) {
+          delete game;
+        }
       }
     });
   });

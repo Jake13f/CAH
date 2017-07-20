@@ -59,38 +59,69 @@ class Game {
   }
 
   /**
+   * Handles the submission of cards and the sending of the selected
+   * cards to the clients.
+   * @param  {string} user the username of the person submitting
+   * @param  {array} cards integers of the indexes of selected cards
+   */
+  submitCards (user, cards) {
+    this.users[user].submitted = cards || [];
+
+    var allSubmitted = true;
+    var submission = {
+      user: user,
+      cards: this.users[user].submitted.map(card => this.users[user].cards.answers[card])
+    };
+
+    for (var user in this.users) {
+      this.users[user].emit("selected-cards", submission);
+
+      if (this.users[user].submitted.length === 0 && this.guessing !== user) {
+        allSubmitted = false;
+      }
+    }
+
+    if (allSubmitted === true) {
+      // TODO: Let the guesser select an answer
+      console.log("ALL SUBMITTED");
+    }
+  }
+
+  /**
    * Initializes the game for each user and removes the cards
    * from the deck.
    */
   load () {
-    var cards = {
-      question: {
-        text: "N/a",
-        pick: 0
-      },
-      answers: []
-    };
-
     if (this.started || this.cards.blackCards === undefined || this.cards.whiteCards === undefined)
       return;
 
     this.started = true; // Mark the game as started
 
     // Choose a random question and remove it
+    var question = {
+      text: "N/a",
+      pick: 0
+    };
     if (this.cards.blackCards.length < 1) {
-      cards.question = "Out of Questions! Please start a new game."
+      cards.question.text = "Out of Questions! Please start a new game.";
+      cards.question.pick = 0;
     } else {
       var index = rand(this.cards.blackCards.length);
-      cards.question = this.cards.blackCards[index];
+      question = this.cards.blackCards[index];
       this.cards.blackCards.splice(index, 1); // Remove from the array
     }
 
     // Choose random answers and remove them for each user
     for (var user in this.users) {
+      var cards = {
+        question: question,
+        answers: []
+      };
+
       if (user === this.guessing) // Init the guesser's screen
         this.users[user].emit("guessing");
-
-      cards.answers = [];
+      else
+        this.users[user].emit("answering");
 
       for (var numCards = 0; numCards < 8; ++numCards) {
         if (this.cards.whiteCards.length < 1) break;
@@ -101,6 +132,7 @@ class Game {
       }
 
       this.users[user].cards = cards;
+      this.users[user].submitted = [];
       this.users[user].emit("load-cards", cards);
     }
   }

@@ -12,9 +12,12 @@ const ELEMENTS = {
   pause: "#pause",
   stop: "#stop",
   reset: "#reset",
+  submit: "#submit-answer",
 
   question: "#question",
   answers: "#answers",
+  submitted_answers: "#submitted-answers",
+  submission: ".submission",
 
   answer_card: ".answer",
   question_card: ".question",
@@ -34,4 +37,5 @@ $(document).ready(() => {
   $(ELEMENTS.reset).on("click", e => game.reset());
 
   $(document).on("click", ELEMENTS.answer_card, function (e) { game.selectCard($(this).data("index")); });
+  $(document).on("click", ELEMENTS.submit, function (e) { game.submitCards(); });
 });
