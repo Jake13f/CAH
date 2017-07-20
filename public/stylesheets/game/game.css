@@ -17,8 +17,10 @@
   transition: .2s background-color linear;
 }
 
-#menu > button#start { background-color: #0da934; }
-#menu > button#start:hover { background-color: #00e83a; }
+#menu > button#start,
+#menu > button#submit-answer { background-color: #0da934; }
+#menu > button#start:hover,
+#menu > button#submit-answer:hover { background-color: #00e83a; }
 
 #menu > button#reset { background-color: #ff8a00; }
 #menu > button#reset:hover { background-color: #cc6e00; }
