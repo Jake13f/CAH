@@ -58,8 +58,17 @@ class GameSocket {
 
   selectCard (index) {
     if (index >= 0 && index < this.cards.answers.length) {
-      if (this.cards.selected.length >= this.cards.question.pick)
+      // Deselect a card if it is clicked on again
+      if (this.cards.answers[index].selected === true) {
+        this.cards.answers[index].deselect();
+        this.cards.selected.splice(index, 1);
+        return;
+      }
+
+      // Limit the number of cards selected
+      while (this.cards.selected.length >= this.cards.question.pick) {
         this.cards.answers[this.cards.selected.shift()].deselect(); // Removes first item and returns it like a queue
+      }
 
       this.cards.answers[index].select();
       this.cards.selected.push(index);
@@ -89,6 +98,10 @@ class GameSocket {
       // Render cards
       $(this.elements.question).html(this.cards.question.render());
       $(this.elements.answers).html(this.cards.answers.map(ans => ans.render()).join(""));
+    });
+
+    this.connection.on("guessing", () => {
+      console.log("GUESSING");
     });
   }
 }

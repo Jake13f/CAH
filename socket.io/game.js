@@ -10,6 +10,7 @@ class Game {
     this.cards = cards || {};
     this.room = roomname || "";
     this.started = false;
+    this.guessing = "";
   }
 
   /**
@@ -22,10 +23,14 @@ class Game {
     if (this.users[username] !== undefined || this.started)
       return false; // name already used
 
+    if (this.guessing === "")
+      this.guessing = username;
+
     client.username = username;
     client.roomname = this.room;
     client.join(this.room);
     this.users[username] = client;
+
     return true
   }
 
@@ -56,7 +61,6 @@ class Game {
   /**
    * Initializes the game for each user and removes the cards
    * from the deck.
-   * @return {Object} The initial cards for the current game
    */
   load () {
     var cards = {
@@ -68,7 +72,7 @@ class Game {
     };
 
     if (this.started || this.cards.blackCards === undefined || this.cards.whiteCards === undefined)
-      return cards;
+      return;
 
     this.started = true; // Mark the game as started
 
@@ -83,6 +87,9 @@ class Game {
 
     // Choose random answers and remove them for each user
     for (var user in this.users) {
+      if (user === this.guessing) // Init the guesser's screen
+        this.users[user].emit("guessing");
+
       cards.answers = [];
 
       for (var numCards = 0; numCards < 8; ++numCards) {
@@ -96,8 +103,6 @@ class Game {
       this.users[user].cards = cards;
       this.users[user].emit("load-cards", cards);
     }
-
-    return cards;
   }
 
   /**

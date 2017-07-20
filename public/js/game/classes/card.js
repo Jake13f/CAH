@@ -58,6 +58,6 @@ class Question extends Card {
    * @return {string} HTML string for the given card
    */
   render () {
-    return "<div class='card question'>" + super.render() + "</div>";
+    return "<div class='card question'>" + super.render() + " (" + this.pick + ")</div>";
   }
 }
