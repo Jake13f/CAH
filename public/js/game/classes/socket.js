@@ -127,7 +127,7 @@ class GameSocket {
     });
 
     /**
-     * Display the submitted cards
+     * Display the submitted cards.  Stores the user who submitted the card as data on the element.
      * @param  {object} submission contains the user's submitted cards and the username of the
      *                             person who sent them
      */
@@ -138,6 +138,13 @@ class GameSocket {
       elem.data("user", submission.user);
 
       $(this.elements.submitted_answers).append(elem);
+    });
+
+    /**
+     * Initialize the guesser's screen to allow them to select cards
+     */
+    this.connection.on("start-guessing", () => {
+
     });
   }
 }

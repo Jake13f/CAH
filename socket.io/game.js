@@ -83,7 +83,7 @@ class Game {
 
     if (allSubmitted === true) {
       // TODO: Let the guesser select an answer
-      console.log("ALL SUBMITTED");
+      this.users[this.guessing].emit("start-guessing");
     }
   }
 
