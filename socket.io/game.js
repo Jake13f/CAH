@@ -28,6 +28,7 @@ class Game {
 
     client.username = username;
     client.roomname = this.room;
+    client.score = 0;
     client.join(this.room);
     this.users[username] = client;
 
@@ -56,6 +57,19 @@ class Game {
    */
   checkName (username) {
     return this.users[username] === undefined;
+  }
+
+  /**
+   * Given a selected user, increments there score
+   * @param {string} targetUser The key username of the user to increment score for
+   */
+  selectSubmission (targetUser) {
+    if (!this.users[targetUser])
+      return false;
+
+    this.users[targetUser].score += 1;
+    this.renderStats();
+    return true;
   }
 
   /**
@@ -134,6 +148,29 @@ class Game {
       this.users[user].cards = cards;
       this.users[user].submitted = [];
       this.users[user].emit("load-cards", cards);
+    }
+
+    this.renderStats();
+  }
+
+  /**
+   * Renders the stats for the current game to the clients.
+   * Sends the usernames with the appropriate scores for each to all users.
+   */
+  renderStats () {
+    var stats = [];
+
+    // Get all of the relevant stats
+    for (var user in this.users) {
+      stats.push({
+        username: this.users[user].username,
+        score: this.users[user].score
+      });
+    }
+
+    // Send to everyone in the game
+    for (var user in this.users) {
+      this.users[user].emit("render:stats", stats);
     }
   }
 

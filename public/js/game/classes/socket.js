@@ -75,6 +75,15 @@ class GameSocket {
     }
   }
 
+  /**
+   * Gives a point to the winning user for the round.
+   * @param {string} targetUser the user to increment score for because they were selected
+   *                            for that round.
+   */
+  selectSubmission (targetUser) {
+    this.connection.emit("select-submission", targetUser);
+  }
+
   submitCards () {
     if (this.cards.selected.length !== this.cards.question.pick)
       return;
@@ -141,10 +150,20 @@ class GameSocket {
     });
 
     /**
-     * Initialize the guesser's screen to allow them to select cards
+     * Initialize the guesser's screen to allow them to select cards.
      */
     this.connection.on("start-guessing", () => {
-
+      
     });
+
+    /**
+     * Renders the users and their scores to the screen.
+     */
+    this.connection.on("render:stats", stats => {
+      stats = stats.map(stat => $("<li>", { text: stat.username + ": " + stat.score }));
+
+      $(this.elements.users).html("");
+      $(this.elements.users).append(stats);
+    })
   }
 }

@@ -55,6 +55,17 @@ module.exports = (io) => {
     });
 
     /**
+     * Handles score taking when a card has been selected.  Increments a user's
+     * score and updates it on the according scoreboards.
+     */
+    client.on("select-submission", targetUser => {
+      if (checkForGame(client.roomname, games) === true) {
+        var game = games[client.roomname];
+        game.selectSubmission(targetUser);
+      }
+    });
+
+    /**
      * Handles the event of a user submitting their cards
      */
     client.on("submit-cards", cards => {
@@ -75,7 +86,7 @@ module.exports = (io) => {
 
         // Removes the game if no users left
         if (Object.keys(game.users).length === 0) {
-          delete game;
+          delete games[client.roomname];
         }
       }
     });

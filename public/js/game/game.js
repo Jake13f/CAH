@@ -14,6 +14,7 @@ const ELEMENTS = {
   reset: "#reset",
   submit: "#submit-answer",
   overlay: ".overlay",
+  users: "#users",
 
   question: "#question",
   answers: "#answers",
@@ -39,4 +40,5 @@ $(document).ready(() => {
 
   $(document).on("click", ELEMENTS.answer_card, function (e) { game.selectCard($(this).data("index")); });
   $(document).on("click", ELEMENTS.submit, function (e) { game.submitCards(); });
+  $(document).on("click", ELEMENTS.submission, function (e) { game.selectSubmission($(this).data("user")); });
 });
